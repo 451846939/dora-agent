@@ -1,0 +1,40 @@
+nodes:
+#  - id: rust-status-node
+#    custom:
+#      build: cargo build -p rust-dataflow-example-status-node
+#      source: ./target/debug/rust-dataflow-example-status-node
+#      inputs:
+#        tick: dora/timer/millis/100
+#        random: rust-node/input
+#      outputs:
+#        - status
+  - id: web-search
+    build: cargo build -p web-search
+    path: ./target/debug/web-search
+    inputs:
+      #      tike: dora/timer/millis/100
+      init: router/init
+      query: router/query
+    outputs:
+      - register
+  - id: router
+    build: cargo build -p router
+    path: ./target/debug/router
+    inputs:
+      register: web-search/register
+      query: rust-node/query
+    outputs:
+      - query
+      - init
+  - id: dora-record
+    custom:
+      source: dora-record
+    inputs:
+      query: rust-node/query
+  - id: rust-node
+    build: cargo build -p rust-dataflow-example-node
+    path: ./target/debug/rust-dataflow-example-node
+    #    inputs:
+    #      tick: dora/timer/millis/10
+    outputs:
+      - query

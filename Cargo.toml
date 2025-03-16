@@ -1,0 +1,8 @@
+[workspace.package]
+version = "0.0.1"
+#[patch.crates-io]
+#zenoh = { git = "https://github.com/eclipse-zenoh/zenoh.git", tag = "1.2.2" }
+
+[workspace]
+resolver = "1"
+members = ["xtask","node","web-search","status-node", "router","common"]
