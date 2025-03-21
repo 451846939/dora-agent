@@ -1,1 +1,3 @@
 /target
+./*/target
+./xtask/target

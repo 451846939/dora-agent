@@ -5,4 +5,4 @@ version = "0.0.1"
 
 [workspace]
 resolver = "1"
-members = ["xtask","node","web-search","status-node", "router","common"]
+members = ["xtask","node","web-search","status-node", "router","common","file"]

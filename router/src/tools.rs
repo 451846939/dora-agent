@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use crate::register::RouterNode;
 use dora_node_api::{DoraNode, Metadata};
+
 use common::NodeDescriptor;
 use common::tools::ToolsError;
 
@@ -28,7 +29,7 @@ impl Tool for GetNodes {
         }
     }
 
-    async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
+    async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
 
         let nodes = self.router.get_registered_nodes();
         Ok(nodes)

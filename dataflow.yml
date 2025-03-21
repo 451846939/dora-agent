@@ -14,18 +14,34 @@ nodes:
     inputs:
       #      tike: dora/timer/millis/100
       init: router/init
-      query: router/query
+      web_search: router/web_search
     outputs:
-      - register
+      - register_web_search
+      - result_web_search
+  - id: file
+    build: cargo build -p file
+    path: ./target/debug/file
+    inputs:
+      #      tike: dora/timer/millis/100
+      init: router/init
+      file_op: router/file_op
+    outputs:
+      - register_file_op
+      - result_file_op
   - id: router
     build: cargo build -p router
     path: ./target/debug/router
     inputs:
-      register: web-search/register
+      register_web_search: web-search/register_web_search
+      register_file_op: file/register_file_op
       query: rust-node/query
+      result_web_search: web-search/result_web_search
+      result_file_op: file/result_file_op
     outputs:
+      - web_search
       - query
       - init
+      - file_op
   - id: dora-record
     custom:
       source: dora-record

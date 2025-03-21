@@ -2,6 +2,8 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ToolsError {
+    #[error("file error: {0}")]
+    FileError(String),
     #[error("search error: {0}")]
     SearchError(String),
     #[error("cursor error: {0}")]

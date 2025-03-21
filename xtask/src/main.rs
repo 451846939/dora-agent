@@ -5,6 +5,7 @@ use std::process::Command;
 use tokio::process::Command as TokioCommand;
 use eyre::{bail, Context, Result};
 
+
 mod tasks;
 
 #[derive(Parser)]
@@ -27,10 +28,10 @@ enum Commands {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    print!("Starting xtask...\n");
+    println!("Starting xtask...");
     dora_tracing::set_up_tracing("rust-dataflow-runner")
         .wrap_err("failed to set up tracing subscriber")?;
-    print!("Starting xtask... dora_tracing \n");
+    println!("Starting xtask... dora_tracing ");
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
     println!("CARGO_MANIFEST_DIR: {:?}", root);
     let file_path = Path::new(file!());

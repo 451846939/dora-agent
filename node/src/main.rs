@@ -2,13 +2,19 @@ use std::thread::sleep;
 use std::time::Duration;
 use dora_node_api::{self, dora_core::config::DataId, DoraNode, Event, IntoArrow};
 
+
 fn main() -> eyre::Result<()> {
     println!("hello");
 
     let output = DataId::from("query".to_owned());
-    sleep(Duration::from_secs(5));
+
     let (mut node, mut events) = DoraNode::init_from_env()?;
-    node.send_output(output.clone(), Default::default(), "rust for linux".into_arrow())?;
+
+    sleep(Duration::from_secs(5));
+
+    node.send_output(output.clone(), Default::default(), "根据rust for linux 来写一篇文章，并生成本地文件".into_arrow())?;
+
+    // node.send_output(DataId::from("init"),Default::default(), "init".into_arrow())?;
     // for i in 0..100 {
     //     let event = match events.recv() {
     //         Some(input) => input,
