@@ -1,19 +1,22 @@
 mod tools;
 
+use std::process::exit;
 use dora_node_api::{self, DoraNode, Event, IntoArrow};
-use dora_node_api::dora_core::config::DataId;
 use rig::completion::Prompt;
 use rig::providers;
-use serde_json::json;
-use common::{register_id, result_id, FlowMessage, NodeDescriptor};
+use common::{register_id, result_id};
 use crate::tools::web_search::{SearchResult, SearchWebArgs};
 use anyhow::Context;
+use common::config::{AppConfig};
+use common::descriptor::NodeDescriptor;
+use common::message::FlowMessage;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
     println!("🚀 start web-search");
     let (mut node, mut events) = DoraNode::init_from_env()?;
     let app_id = "web_search".to_string();
+    let (openai_client,config)=AppConfig::from_file_with_appid(&app_id)?;
     while let Some(event) = events.recv_async().await {
         match event {
             Event::Input {
@@ -34,7 +37,7 @@ async fn main() -> eyre::Result<()> {
                     let openai_client = providers::ollama::Client::new();
 
                     let agent = openai_client
-                        .agent("qwen2.5-coder:14b")
+                        .agent(&config.model)
                         .preamble("你是一个搜索助手，可以使用 search_web 工具来执行搜索任务,你应该判断使用 search_web 并将 click 设置为 true，否则不点击。")
                         .max_tokens(1024)
                         .tool(crate::tools::web_search::SearchWebTool)
@@ -54,6 +57,7 @@ async fn main() -> eyre::Result<()> {
                         prev_result: flow_msg.result.clone(),
                         result: Some(serde_json::from_str(web_search_json)
                             .unwrap_or(serde_json::Value::String(web_search_json.to_string()))),
+                        aggregated: None,
                     };
 
                     // 统一传输 FlowMessage 数据
@@ -73,6 +77,7 @@ async fn main() -> eyre::Result<()> {
                         description: "使用浏览器执行搜索，并解析搜索结果".to_string(),
                         inputs: serde_json::to_string_pretty(&schemars::schema_for!(SearchWebArgs)).unwrap(),
                         outputs: serde_json::to_string_pretty(&schemars::schema_for!(SearchResult)).unwrap(),
+                        aggregate: false,
                     }.into_arrow())?;
                     println!("🔍 web-search registered");
                 }
@@ -80,6 +85,7 @@ async fn main() -> eyre::Result<()> {
             },
             Event::Stop => {
                 println!("Received manual stop");
+                break;
             }
             Event::InputClosed { id } => {
                 println!("Input `{id}` was closed");

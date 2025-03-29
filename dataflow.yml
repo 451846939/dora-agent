@@ -1,13 +1,31 @@
 nodes:
-#  - id: rust-status-node
-#    custom:
-#      build: cargo build -p rust-dataflow-example-status-node
-#      source: ./target/debug/rust-dataflow-example-status-node
-#      inputs:
-#        tick: dora/timer/millis/100
-#        random: rust-node/input
-#      outputs:
-#        - status
+  #  - id: rust-status-node
+  #    custom:
+  #      build: cargo build -p rust-dataflow-example-status-node
+  #      source: ./target/debug/rust-dataflow-example-status-node
+  #      inputs:
+  #        tick: dora/timer/millis/100
+  #        random: rust-node/input
+  #      outputs:
+  #        - status
+  - id: rss
+    build: cargo build -p rss
+    path: ./target/debug/rss
+    inputs:
+      init: router/init
+      rss: router/rss
+    outputs:
+      - register_rss
+      - result_rss
+  - id: reactor
+    build: cargo build -p reactor
+    path: ./target/debug/reactor
+    inputs:
+      init: router/init
+      reactor: router/reactor
+    outputs:
+      - register_reactor
+      - result_reactor
   - id: web-search
     build: cargo build -p web-search
     path: ./target/debug/web-search
@@ -34,23 +52,35 @@ nodes:
     inputs:
       register_web_search: web-search/register_web_search
       register_file_op: file/register_file_op
+      register_reactor: reactor/register_reactor
+      register_rss: rss/register_rss
       query: rust-node/query
       result_web_search: web-search/result_web_search
       result_file_op: file/result_file_op
+      result_reactor: reactor/result_reactor
+      result_rss: rss/result_rss
     outputs:
+      - workflow_status
       - web_search
       - query
       - init
       - file_op
+      - reactor
+      - rss
   - id: dora-record
     custom:
       source: dora-record
     inputs:
       query: rust-node/query
   - id: rust-node
-    build: cargo build -p rust-dataflow-example-node
-    path: ./target/debug/rust-dataflow-example-node
-    #    inputs:
-    #      tick: dora/timer/millis/10
+    build: cargo build -p rust-node
+    path: ./target/debug/rust-node
+    inputs:
+      workflow_status: router/workflow_status
     outputs:
       - query
+  - id: status-node
+    build: cargo build -p status-node
+    path: ./target/debug/status-node
+    inputs:
+      workflow_status: router/workflow_status
