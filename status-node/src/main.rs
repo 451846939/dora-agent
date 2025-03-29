@@ -1,41 +1,43 @@
 use dora_node_api::{self, dora_core::config::DataId, DoraNode, Event, IntoArrow};
 use eyre::Context;
+use common::status_log::{WorkflowLog, WORKFLOW_STATUS};
 
 fn main() -> eyre::Result<()> {
-    println!("hello");
 
-    let status_output = DataId::from("status".to_owned());
     let (mut node, mut events) = DoraNode::init_from_env()?;
 
-    let mut ticks = 0;
     while let Some(event) = events.recv() {
         match event {
             Event::Input { id, metadata, data } => match id.as_ref() {
-                "tick" => {
-                    ticks += 1;
-                }
-                "query" => {
-                    let value = u64::try_from(&data).context("unexpected data type")?;
-
-                    let output = format!(
-                        "operator received random value {value:#x} after {} ticks",
-                        ticks
-                    );
-                    node.send_output(
-                        status_output.clone(),
-                        metadata.parameters,
-                        output.into_arrow(),
-                    )?;
+                WORKFLOW_STATUS => {
+                    // 尝试解析为 WorkflowLog
+                    match WorkflowLog::try_from(data) {
+                        Ok(log) => {
+                            println!(
+                                "✅ 收到 WorkflowLog:\nWorkflow: {}\nStep {}/{}\nNode: {}\nStatus: {}\nMessage: {}\nInput: {}\nOutput: {}\n",
+                                log.workflow_id,
+                                log.step_index + 1,
+                                log.total_steps,
+                                log.node_id,
+                                log.status,
+                                log.message,
+                                serde_json::to_string_pretty(&log.input)?,
+                                serde_json::to_string_pretty(&log.output)?
+                            );
+                        }
+                        Err(err) => {
+                            println!("⚠️ 解析 WorkflowLog 失败: {}", err);
+                        }
+                    }
                 }
                 other => eprintln!("ignoring unexpected input {other}"),
             },
-            Event::Stop => {}
+            Event::Stop => {
+                println!("status-node received stop event");
+                break
+            }
             Event::InputClosed { id } => {
-                println!("input `{id}` was closed");
-                if *id == "random" {
-                    println!("`random` input was closed -> exiting");
-                    break;
-                }
+                println!("input {id} closed");
             }
             other => {
                 println!("received unknown event {other:?}");
