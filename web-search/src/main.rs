@@ -34,7 +34,8 @@ async fn main() -> eyre::Result<()> {
                     } else {
                         serde_json::to_string(&flow_msg.input)?
                     };
-                    let openai_client = providers::ollama::Client::new();
+
+                    // let openai_client = providers::ollama::Client::new();
 
                     let agent = openai_client
                         .agent(&config.model)
