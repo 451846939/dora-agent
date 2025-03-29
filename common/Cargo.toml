@@ -12,3 +12,6 @@ anyhow = "1.0.86"
 thiserror = "1.0.63"
 eyre = "0.6.8"
 schemars = "0.8.22"
+regex = "1.11.1"
+config = "0.15.11"
+rig-core = { version = "0.9.1"}
