@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
-use common::NodeDescriptor;
+use common::descriptor::NodeDescriptor;
 
 #[derive(Debug)]
 pub struct RouterNode {

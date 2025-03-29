@@ -5,8 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use crate::register::RouterNode;
 use dora_node_api::{DoraNode, Metadata};
-
-use common::NodeDescriptor;
+use common::descriptor::NodeDescriptor;
 use common::tools::ToolsError;
 
 #[derive(Clone)]
