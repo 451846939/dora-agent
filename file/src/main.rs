@@ -1,5 +1,5 @@
 // use anyhow::{ Result};
-use common::{NodeDescriptor, flow_msg, register_id, FlowMessage, result_id}; // 假设 NodeDescriptor 和 flow_msg 模块已定义
+use common::{register_id, result_id, clean_llm_output}; // 假设 NodeDescriptor 和 flow_msg 模块已定义
 use dora_node_api::{ArrowData, DoraNode, Event, IntoArrow};
 use dora_node_api::dora_core::config::DataId;
 use rig::providers;
@@ -11,6 +11,9 @@ use rig::completion::Prompt;
 use rig::tool::Tool;
 use tracing::info;
 use regex::Regex;
+use common::config::AppConfig;
+use common::descriptor::NodeDescriptor;
+use common::message::FlowMessage;
 use crate::tools::file::{FileOperationArgs, FileTool};
 
 mod tools;
@@ -22,7 +25,8 @@ mod tools;
 async fn main() -> eyre::Result<()> {
     println!("🚀 启动 file 节点服务");
     let (mut node, mut events) = DoraNode::init_from_env()?;
-    let id="file_op";
+    let app_id="file_op";
+    let (openai_client,config)=AppConfig::from_file_with_appid(&app_id)?;
     while let Some(event) = events.recv_async().await {
         match event {
             Event::Input { id, metadata, data } => match id.as_str() {
@@ -53,9 +57,8 @@ async fn main() -> eyre::Result<()> {
                     );
                     println!("LLM Prompt: {}", prompt);
 
-                    let openai_client = providers::ollama::Client::new();
                     let agent = openai_client
-                        .agent("qwen2.5-coder:14b")
+                        .agent(&config.model)
                         .tool(FileTool)
                         .preamble("你是一个文件操作输入组装助手，请根据给出的输入和 JSON Schema 重新生成合法的 JSON 参数。")
                         .max_tokens(256)
@@ -79,10 +82,7 @@ async fn main() -> eyre::Result<()> {
                     }
                     let mut res = reassembled.unwrap();
 
-                    let re = Regex::new(r"(?s)^```json\s*\n(.*)\n```").unwrap();
-                    if let Some(captures) = re.captures(&res) {
-                        res = captures[1].to_string();
-                    }
+                    res=clean_llm_output(&res);
                     // 将大模型返回的合法 JSON 解析为 FileOperationArgs
                     let file_args = serde_json::from_str(res.as_str())
                         .context("解析重新组装的 JSON 参数失败").unwrap();
@@ -93,13 +93,13 @@ async fn main() -> eyre::Result<()> {
                     println!("文件操作结果: {:?}", result);
                     // let result=reassembled.unwrap();
                     // 构造 NodeDescriptor 返回结果，outputs 字段放置操作结果
-                    let app_id = "file_op";
                     let new_flow_msg = FlowMessage {
                         workflow_id: flow_msg.workflow_id.clone(),
                         node_id: app_id.to_string(),
                         input: flow_msg.input.clone(),
                         prev_result: flow_msg.result.clone(),
                         result: Some(serde_json::to_value(result)?),
+                        aggregated: None,
                     };
                     node.send_output(
                         result_id(app_id),
@@ -116,6 +116,7 @@ async fn main() -> eyre::Result<()> {
                         description: "文件操作节点，支持创建文件夹、删除文件夹、创建文件、删除文件、更新文件和读取文件".to_string(),
                         inputs: serde_json::to_string_pretty(&schema_for!(Vec<FileOperationArgs>)).unwrap(),
                         outputs: "字符串类型，操作结果或读取的文件内容".to_string(),
+                        aggregate: false,
                     };
                     node.send_output(
                         register_id(id),

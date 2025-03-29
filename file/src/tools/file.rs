@@ -21,7 +21,7 @@ pub struct FileOperationArgs {
     pub operation: String,
     /// 文件或文件夹的路径（可以是相对路径或绝对路径）
     pub path: String,
-    /// 文件内容（用于创建或更新文件，其他操作可忽略）
+    /// 文件内容（用于创建或更新文件(create_file)(update_file)必须要有值，其他操作可忽略）
     pub content: Option<String>,
 }
 
