@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE 调试工具</title>
+    <style>
+        body { font-family: sans-serif; padding: 2em; background: #f6f8fa; }
+        #log { display: flex; flex-direction: column; gap: 1em; }
+        .card {
+            background: #fff;
+            border-left: 6px solid gray;
+            padding: 1em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            white-space: normal;
+        }
+        .started { border-color: #0a84ff; }
+        .completed { border-color: #28a745; }
+        .failed { border-color: #d73a49; }
+        .finished { border-color: #6f42c1; }
+
+        details { margin-top: 0.5em; }
+        pre {
+            background: #f1f1f1;
+            padding: 0.5em;
+            overflow-x: auto;
+        }
+        code { background: #eee; padding: 0 0.3em; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<h1>SSE 工作流展示器</h1>
+<label>查询参数（query=）：<input type="text" id="query" value="详细写一篇缅甸发生7.9级地震的新闻"></label>
+<button onclick="connect()">连接 SSE</button>
+
+<h2>接收到的事件：</h2>
+<div id="log"></div>
+
+<script>
+    let eventSource;
+
+    function connect() {
+        const query = document.getElementById("query").value;
+        const url = `http://127.0.0.1:3000/sse?query=${encodeURIComponent(query)}`;
+        if (eventSource) eventSource.close();
+
+        addCard("🔌 已连接到: " + url, "started");
+        eventSource = new EventSource(url);
+
+        eventSource.onmessage = (event) => {
+            if (event.data === "[DONE]") {
+                addCard("服务端主动结束连接", "finished");
+                eventSource.close();
+            } else {
+                try {
+                    const log = JSON.parse(event.data);
+                    renderLogCard(log);
+                } catch (e) {
+                    addCard("❌ 无法解析数据: " + event.data, "failed");
+                }
+            }
+        };
+
+        eventSource.onerror = () => {
+            addCard("❌ 连接错误，已断开", "failed");
+            eventSource.close();
+        };
+    }
+
+    function renderLogCard(log) {
+        const div = document.createElement("div");
+        div.className = `card ${log.status}`;
+
+        div.innerHTML = `
+            <b>[${log.status.toUpperCase()}]</b> Step ${log.step_index + 1}/${log.total_steps}<br/>
+            🧱 节点: <code>${log.node_id}</code><br/>
+            🧩 Workflow ID: <code>${log.workflow_id}</code><br/>
+            📝 ${log.message}<br/>
+            <details>
+                <summary>查看输入 / 输出</summary>
+                <pre><b>输入：</b>\n${JSON.stringify(log.input, null, 2)}</pre>
+                <pre><b>输出：</b>\n${JSON.stringify(log.output, null, 2)}</pre>
+            </details>
+        `;
+
+        document.getElementById("log").appendChild(div);
+        div.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function addCard(message, status = "") {
+        const div = document.createElement("div");
+        div.className = `card ${status}`;
+        div.textContent = message;
+        document.getElementById("log").appendChild(div);
+        div.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+</body>
+</html>
