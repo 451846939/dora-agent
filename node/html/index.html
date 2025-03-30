@@ -1,96 +1,213 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <title>SSE 调试工具</title>
+    <meta charset="UTF-8" />
+    <title>dora-agent 对话界面</title>
     <style>
-        body { font-family: sans-serif; padding: 2em; background: #f6f8fa; }
-        #log { display: flex; flex-direction: column; gap: 1em; }
-        .card {
-            background: #fff;
-            border-left: 6px solid gray;
-            padding: 1em;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            white-space: normal;
+        body {
+            font-family: system-ui, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding-bottom: 80px;
         }
-        .started { border-color: #0a84ff; }
-        .completed { border-color: #28a745; }
-        .failed { border-color: #d73a49; }
-        .finished { border-color: #6f42c1; }
 
-        details { margin-top: 0.5em; }
-        pre {
-            background: #f1f1f1;
-            padding: 0.5em;
-            overflow-x: auto;
+        .header {
+            background: white;
+            border-bottom: 1px solid #ddd;
+            padding: 1.5em;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        code { background: #eee; padding: 0 0.3em; border-radius: 4px; }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.95em;
+            margin-top: 0.5em;
+        }
+
+        .chat-container {
+            max-width: 760px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8em;
+            padding: 1em;
+        }
+
+        .message {
+            display: flex;
+            max-width: 100%;
+            padding: 0.8em 1.2em;
+            border-radius: 12px;
+            word-break: break-word;
+            white-space: pre-wrap;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        .left {
+            align-self: flex-start;
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+        }
+
+        .right {
+            align-self: flex-end;
+            background: #daf1ff;
+            border: 1px solid #8ac9ff;
+        }
+
+        .status-started { border-left: 5px solid #0a84ff; }
+        .status-completed { border-left: 5px solid #28a745; }
+        .status-failed { border-left: 5px solid #d73a49; }
+        .status-finished { border-left: 5px solid #6f42c1; }
+
+        details {
+            margin-top: 0.6em;
+            padding-left: 1em;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        pre {
+            background: #f6f6f6;
+            padding: 0.6em;
+            overflow-x: auto;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        code {
+            background: #eee;
+            padding: 0 0.3em;
+            border-radius: 4px;
+        }
+
+        .emoji {
+            font-size: 1.4em;
+            margin-right: 0.5em;
+            vertical-align: middle;
+        }
+
+        .chat-input {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 -1px 4px rgba(0,0,0,0.1);
+            padding: 1em;
+            display: flex;
+            justify-content: center;
+        }
+
+        .chat-input input {
+            width: 60%;
+            padding: 0.6em 1em;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+            margin-right: 1em;
+        }
+
+        .chat-input button {
+            padding: 0.6em 1.2em;
+            font-size: 1em;
+            border: none;
+            border-radius: 20px;
+            background-color: #0a84ff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #006be6;
+        }
     </style>
 </head>
 <body>
-<h1>SSE 工作流展示器</h1>
-<label>查询参数（query=）：<input type="text" id="query" value="详细写一篇缅甸发生7.9级地震的新闻"></label>
-<button onclick="connect()">连接 SSE</button>
+<div class="header">
+    <h1>🤖 dora-agent 对话</h1>
+    <p>你可以向 agent 提出任务，比如：“从 bilibili.com 找关于 AI 的视频链接，写入文件”</p>
+</div>
 
-<h2>接收到的事件：</h2>
-<div id="log"></div>
+<div id="log" class="chat-container"></div>
+
+<div class="chat-input">
+    <input id="query" placeholder="从 bilibili.com 找关于 AI 的视频链接，写入文件" value="从 bilibili.com 找关于 AI 的视频链接，写入文件" />
+    <button onclick="connect()">发送</button>
+</div>
 
 <script>
     let eventSource;
 
     function connect() {
         const query = document.getElementById("query").value;
+        if (!query.trim()) return;
+
+        addMessage(query, "right");
+
         const url = `http://127.0.0.1:3000/sse?query=${encodeURIComponent(query)}`;
         if (eventSource) eventSource.close();
 
-        addCard("🔌 已连接到: " + url, "started");
         eventSource = new EventSource(url);
+        addMessage("📡 正在连接: " + url, "left", "status-started");
 
         eventSource.onmessage = (event) => {
             if (event.data === "[DONE]") {
-                addCard("服务端主动结束连接", "finished");
+                addMessage("🎉 服务端已完成，连接关闭。", "left", "status-finished");
                 eventSource.close();
             } else {
                 try {
                     const log = JSON.parse(event.data);
-                    renderLogCard(log);
+                    renderLogMessage(log);
                 } catch (e) {
-                    addCard("❌ 无法解析数据: " + event.data, "failed");
+                    addMessage("❌ 无法解析数据: " + event.data, "left", "status-failed");
                 }
             }
         };
 
         eventSource.onerror = () => {
-            addCard("❌ 连接错误，已断开", "failed");
+            addMessage("❌ SSE 连接错误，已断开", "left", "status-failed");
             eventSource.close();
         };
+
+        document.getElementById("query").value = "";
     }
 
-    function renderLogCard(log) {
-        const div = document.createElement("div");
-        div.className = `card ${log.status}`;
-
-        div.innerHTML = `
-            <b>[${log.status.toUpperCase()}]</b> Step ${log.step_index + 1}/${log.total_steps}<br/>
-            🧱 节点: <code>${log.node_id}</code><br/>
-            🧩 Workflow ID: <code>${log.workflow_id}</code><br/>
-            📝 ${log.message}<br/>
-            <details>
-                <summary>查看输入 / 输出</summary>
-                <pre><b>输入：</b>\n${JSON.stringify(log.input, null, 2)}</pre>
-                <pre><b>输出：</b>\n${JSON.stringify(log.output, null, 2)}</pre>
-            </details>
-        `;
-
-        document.getElementById("log").appendChild(div);
-        div.scrollIntoView({ behavior: "smooth" });
+    function renderLogMessage(log) {
+        const emoji = "🧠";
+        const statusClass = `status-${log.status}`;
+        const html = `
+        <div class="message left ${statusClass}">
+          <div><span class="emoji">${emoji}</span><b>[${log.status.toUpperCase()}]</b> 节点 <code>${log.node_id}</code> (${log.step_index + 1}/${log.total_steps})<br/>
+          🧩 Workflow ID: <code>${log.workflow_id}</code><br/>
+          📝 ${log.message}
+          <details>
+              <summary>查看输入 / 输出</summary>
+              <pre><b>输入：</b>\n${JSON.stringify(log.input, null, 2)}</pre>
+              <pre><b>输出：</b>\n${JSON.stringify(log.output, null, 2)}</pre>
+          </details></div>
+        </div>
+      `;
+        document.getElementById("log").insertAdjacentHTML("beforeend", html);
+        document.getElementById("log").lastElementChild.scrollIntoView({ behavior: "smooth" });
     }
 
-    function addCard(message, status = "") {
+    function addMessage(message, side = "left", status = "") {
         const div = document.createElement("div");
-        div.className = `card ${status}`;
-        div.textContent = message;
+        div.className = `message ${side} ${status}`;
+        div.innerHTML = `<span class="emoji">💬</span>${message}`;
         document.getElementById("log").appendChild(div);
         div.scrollIntoView({ behavior: "smooth" });
     }
