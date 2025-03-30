@@ -1,30 +1,37 @@
 [node]
-key = "your_openai_api_key"
-url = "https://api.openai.com/v1"
-model="gpt-3.5-turbo"
+key = ""
+url = "http://localhost:11434/v1"
+#model="gpt-3.5-turbo"
+model="qwen2.5-coder:14b"
 
 [status-node]
-key = "your_openai_api_key"
-url = "https://api.openai.com/v1"
-model="gpt-3.5-turbo"
+key = ""
+url = "http://localhost:11434/v1"
+#model="gpt-3.5-turbo"
+model="qwen2.5-coder:14b"
 
-[reactor]
-key = "your_openai_api_key"
-url = "https://api.openai.com/v1"
-model="gpt-3.5-turbo"
+[react]
+key = ""
+url = "http://localhost:11434/v1"
+#model="gpt-3.5-turbo"
+model="qwen2.5-coder:14b"
+
 
 [router]
-key = "your_openai_api_key"
-url = "https://api.openai.com/v1"
-model="gpt-3.5-turbo"
+key = ""
+url = "http://localhost:11434/v1"
+#model="gpt-3.5-turbo"
+model="qwen2.5-coder:32b"
 
 
-[file]
-key = "your_openai_api_key"
-url = "https://api.openai.com/v1"
-model="gpt-3.5-turbo"
+[file_op]
+key = ""
+url = "http://localhost:11434/v1"
+#model="gpt-3.5-turbo"
+model="qwen2.5-coder:14b"
 
-[web-search]
-key = "your_openai_api_key"
-url = "https://api.openai.com/v1"
-model="gpt-3.5-turbo"
+[web_search]
+key = ""
+url = "http://localhost:11434/v1"
+#model="gpt-3.5-turbo"
+model="qwen2.5-coder:14b"
