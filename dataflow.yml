@@ -17,15 +17,15 @@ nodes:
     outputs:
       - register_rss
       - result_rss
-  - id: reactor
-    build: cargo build -p reactor
-    path: ./target/debug/reactor
+  - id: react
+    build: cargo build -p react
+    path: ./target/debug/react
     inputs:
       init: router/init
-      reactor: router/reactor
+      react: router/react
     outputs:
-      - register_reactor
-      - result_reactor
+      - register_react
+      - result_react
   - id: web-search
     build: cargo build -p web-search
     path: ./target/debug/web-search
@@ -52,12 +52,12 @@ nodes:
     inputs:
       register_web_search: web-search/register_web_search
       register_file_op: file/register_file_op
-      register_reactor: reactor/register_reactor
+      register_react: react/register_react
       register_rss: rss/register_rss
       query: rust-node/query
       result_web_search: web-search/result_web_search
       result_file_op: file/result_file_op
-      result_reactor: reactor/result_reactor
+      result_react: react/result_react
       result_rss: rss/result_rss
     outputs:
       - workflow_status
@@ -65,7 +65,7 @@ nodes:
       - query
       - init
       - file_op
-      - reactor
+      - react
       - rss
   - id: dora-record
     custom:

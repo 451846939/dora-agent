@@ -1,27 +1,25 @@
-mod reactor;
+mod react;
 
 use anyhow::Context;
 use dora_node_api::{DoraNode, Event, IntoArrow};
 use dora_node_api::dora_core::config::DataId;
 use eyre::Result;
 use rig::completion::Prompt;
-use rig::providers;
 use schemars::schema_for;
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::{Value};
 use common::{register_id, result_id, clean_llm_output};
 use std::str::FromStr;
-use regex::Regex;
 use common::config::AppConfig;
 use common::descriptor::NodeDescriptor;
 use common::message::FlowMessage;
-use crate::reactor::{ReactInput, ReactOutput};
+use crate::react::{ReactInput, ReactOutput};
 
 #[tokio::main]
 async fn main() -> Result<()> {
     println!("🚀 start react-node");
     let (mut node, mut events) = DoraNode::init_from_env()?;
-    let app_id = "reactor".to_string();
+    let app_id = "rect".to_string();
     let (openai_client,config)=AppConfig::from_file_with_appid(&app_id)?;
     // 初始化 LLM 代理，角色预设为链式思考专家
     // let openai_client = providers::ollama::Client::new();
@@ -37,7 +35,7 @@ async fn main() -> Result<()> {
         match event {
             Event::Input { id, metadata, data } => {
                 match id.as_str() {
-                    "reactor" => {
+                    "rect" => {
                         // 解析统一 FlowMessage
                         let flow_msg: FlowMessage = FlowMessage::try_from(data)
                             .context("expected FlowMessage").unwrap();
@@ -165,7 +163,7 @@ async fn main() -> Result<()> {
                 }
             }
             Event::Stop => {
-                println!("收到 stop 事件 reactor节点退出");
+                println!("收到 stop 事件 rect节点退出");
                 break;
             }
             Event::InputClosed { id } => {
