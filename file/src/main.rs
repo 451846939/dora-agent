@@ -61,7 +61,7 @@ async fn main() -> eyre::Result<()> {
                         .agent(&config.model)
                         .tool(FileTool)
                         .preamble("你是一个文件操作输入组装助手，请根据给出的输入和 JSON Schema 重新生成合法的 JSON 参数。")
-                        .max_tokens(256)
+                        .max_tokens(1000)
                         .build();
                     let reassembled = agent
                         .prompt(prompt.as_str())
