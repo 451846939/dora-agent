@@ -1,0 +1,20 @@
+🚀 start web-search
+🔍 web-search started
+🔍 web-search registered
+sink received FlowMessage: FlowMessage { workflow_id: "9d51de22-842e-4864-bc3a-17f46c671f13", node_id: "web_search", input: Object {"query": String("从 bilibili.com 找关于 AI 的视频链接")}, prev_result: None, result: Some(String("从 bilibili.com 找关于 AI 的视频链接，写入文件")), aggregated: None }
+[tool-call] 执行搜索: 关于 AI 的视频链接
+[Chromedriver] 已经在运行
+args.click: Some(true)
+[DEBUG] 点击搜索结果: https://www.bilibili.com/read/cv24891484/
+[DEBUG] 未找到正文，当前页面: https://www.bilibili.com/opus/816302558043701285
+[DEBUG] 点击搜索结果: https://www.bilibili.com/video/BV1yk4y1p7Vq/
+[DEBUG] 未找到正文，当前页面: https://www.bilibili.com/video/BV1yk4y1p7Vq/
+[DEBUG] 点击搜索结果: https://www.bilibili.com/video/BV1nD4y1P7cY/
+[DEBUG] 未找到正文，当前页面: https://www.bilibili.com/video/BV1nD4y1P7cY/
+[DEBUG] 点击搜索结果: https://www.bilibili.com/video/BV1ZN411z7Hc/
+[DEBUG] 未找到正文，当前页面: https://www.bilibili.com/video/BV1ZN411z7Hc/
+[DEBUG] 点击搜索结果: https://www.bilibili.com/read/cv34560554/
+[DEBUG] 未找到正文，当前页面: https://www.bilibili.com/opus/932044096958103591
+AI 搜索助手: [{"title":"如何使用ChatGPT 轻松生成AI 视频","link":"https://www.bilibili.com/read/cv24891484/","content":null},{"title":"1小时剪30个短视频切片，把链接扔给AI它全给你搞好！","link":"https://www.bilibili.com/video/BV1yk4y1p7Vq/","content":null},{"title":"如何使用AI 工具Vizard 将视频转化为链接进行分享","link":"https://www.bilibili.com/video/BV1nD4y1P7cY/","content":null},{"title":"一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...","link":"https://www.bilibili.com/video/BV1ZN411z7Hc/","content":null},{"title":"建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...","link":"https://www.bilibili.com/read/cv34560554/","content":null}]
+🔍 web-search finished
+Received manual stop

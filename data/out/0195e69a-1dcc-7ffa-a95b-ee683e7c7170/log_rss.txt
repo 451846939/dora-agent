@@ -1,0 +1,3 @@
+🚀 start rss-node
+✅ rss-node registered
+🛑 收到 stop 事件，rss 节点退出

@@ -1,0 +1,353 @@
+🛰️ `RouterApp` 启动...
+🚀 `RouterApp` 初始化完成
+📥 收到注册事件: ArrowData(StructArray
+-- validity: 
+[
+  valid,
+]
+[
+-- child 0: "id" (Utf8)
+StringArray
+[
+  "rss",
+]
+-- child 1: "description" (Utf8)
+StringArray
+[
+  "RSS 节点：抓取固定 Google News RSS，并根据关键词过滤",
+]
+-- child 2: "inputs" (Utf8)
+StringArray
+[
+  "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssInput\",\n  \"description\": \"✅ 输入只包含关键词\",\n  \"type\": \"object\",\n  \"required\": [\n    \"keywords\"\n  ],\n  \"properties\": {\n    \"keywords\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}",
+]
+-- child 3: "outputs" (Utf8)
+StringArray
+[
+  "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssOutput\",\n  \"description\": \"✅ 输出包含匹配项\",\n  \"type\": \"object\",\n  \"required\": [\n    \"items\"\n  ],\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/RssItem\"\n      }\n    }\n  },\n  \"definitions\": {\n    \"RssItem\": {\n      \"description\": \"✅ RSS 项结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"link\",\n        \"published\",\n        \"summary\",\n        \"title\"\n      ],\n      \"properties\": {\n        \"link\": {\n          \"type\": \"string\"\n        },\n        \"published\": {\n          \"type\": \"string\"\n        },\n        \"summary\": {\n          \"type\": \"string\"\n        },\n        \"title\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}",
+]
+-- child 4: "aggregate" (Boolean)
+BooleanArray
+[
+  false,
+]
+])
+✅ Node registered: {"rss": NodeDescriptor { id: "rss", description: "RSS 节点：抓取固定 Google News RSS，并根据关键词过滤", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssInput\",\n  \"description\": \"✅ 输入只包含关键词\",\n  \"type\": \"object\",\n  \"required\": [\n    \"keywords\"\n  ],\n  \"properties\": {\n    \"keywords\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssOutput\",\n  \"description\": \"✅ 输出包含匹配项\",\n  \"type\": \"object\",\n  \"required\": [\n    \"items\"\n  ],\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/RssItem\"\n      }\n    }\n  },\n  \"definitions\": {\n    \"RssItem\": {\n      \"description\": \"✅ RSS 项结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"link\",\n        \"published\",\n        \"summary\",\n        \"title\"\n      ],\n      \"properties\": {\n        \"link\": {\n          \"type\": \"string\"\n        },\n        \"published\": {\n          \"type\": \"string\"\n        },\n        \"summary\": {\n          \"type\": \"string\"\n        },\n        \"title\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}", aggregate: false }}
+📥 收到注册事件: ArrowData(StructArray
+-- validity: 
+[
+  valid,
+]
+[
+-- child 0: "id" (Utf8)
+StringArray
+[
+  "react",
+]
+-- child 1: "description" (Utf8)
+StringArray
+[
+  "ReAct 节点：使用链式思考整合工作流信息，自我评分直至生成满足要求的输出，必须需要有前置聚合数据，没有前置数据不能单独直接使用,整体输入:{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}",
+]
+-- child 2: "inputs" (Utf8)
+StringArray
+[
+  "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}",
+]
+-- child 3: "outputs" (Utf8)
+StringArray
+[
+  "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactOutput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"chain_of_thought\",\n    \"content\",\n    \"final_conclusion\",\n    \"score\"\n  ],\n  \"properties\": {\n    \"chain_of_thought\": {\n      \"description\": \"详细的链式思考过程\",\n      \"type\": \"string\"\n    },\n    \"content\": {\n      \"description\": \"最终结果\",\n      \"type\": \"string\"\n    },\n    \"final_conclusion\": {\n      \"description\": \"最终得出的结论\",\n      \"type\": \"string\"\n    },\n    \"score\": {\n      \"description\": \"自我评分，范围 0.0 ~ 1.0，1.0 表示输出完美符合要求\",\n      \"type\": \"number\",\n      \"format\": \"double\"\n    }\n  }\n}",
+]
+-- child 4: "aggregate" (Boolean)
+BooleanArray
+[
+  true,
+]
+])
+✅ Node registered: {"rss": NodeDescriptor { id: "rss", description: "RSS 节点：抓取固定 Google News RSS，并根据关键词过滤", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssInput\",\n  \"description\": \"✅ 输入只包含关键词\",\n  \"type\": \"object\",\n  \"required\": [\n    \"keywords\"\n  ],\n  \"properties\": {\n    \"keywords\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssOutput\",\n  \"description\": \"✅ 输出包含匹配项\",\n  \"type\": \"object\",\n  \"required\": [\n    \"items\"\n  ],\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/RssItem\"\n      }\n    }\n  },\n  \"definitions\": {\n    \"RssItem\": {\n      \"description\": \"✅ RSS 项结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"link\",\n        \"published\",\n        \"summary\",\n        \"title\"\n      ],\n      \"properties\": {\n        \"link\": {\n          \"type\": \"string\"\n        },\n        \"published\": {\n          \"type\": \"string\"\n        },\n        \"summary\": {\n          \"type\": \"string\"\n        },\n        \"title\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}", aggregate: false }, "react": NodeDescriptor { id: "react", description: "ReAct 节点：使用链式思考整合工作流信息，自我评分直至生成满足要求的输出，必须需要有前置聚合数据，没有前置数据不能单独直接使用,整体输入:{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactOutput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"chain_of_thought\",\n    \"content\",\n    \"final_conclusion\",\n    \"score\"\n  ],\n  \"properties\": {\n    \"chain_of_thought\": {\n      \"description\": \"详细的链式思考过程\",\n      \"type\": \"string\"\n    },\n    \"content\": {\n      \"description\": \"最终结果\",\n      \"type\": \"string\"\n    },\n    \"final_conclusion\": {\n      \"description\": \"最终得出的结论\",\n      \"type\": \"string\"\n    },\n    \"score\": {\n      \"description\": \"自我评分，范围 0.0 ~ 1.0，1.0 表示输出完美符合要求\",\n      \"type\": \"number\",\n      \"format\": \"double\"\n    }\n  }\n}", aggregate: true }}
+📥 收到注册事件: ArrowData(StructArray
+-- validity: 
+[
+  valid,
+]
+[
+-- child 0: "id" (Utf8)
+StringArray
+[
+  "web_search",
+]
+-- child 1: "description" (Utf8)
+StringArray
+[
+  "使用浏览器执行搜索，并解析搜索结果",
+]
+-- child 2: "inputs" (Utf8)
+StringArray
+[
+  "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchWebArgs\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"click\": {\n      \"type\": [\n        \"boolean\",\n        \"null\"\n      ]\n    },\n    \"query\": {\n      \"type\": \"string\"\n    },\n    \"site\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    }\n  }\n}",
+]
+-- child 3: "outputs" (Utf8)
+StringArray
+[
+  "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchResult\",\n  \"type\": \"object\",\n  \"required\": [\n    \"link\",\n    \"title\"\n  ],\n  \"properties\": {\n    \"content\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"link\": {\n      \"type\": \"string\"\n    },\n    \"title\": {\n      \"type\": \"string\"\n    }\n  }\n}",
+]
+-- child 4: "aggregate" (Boolean)
+BooleanArray
+[
+  false,
+]
+])
+✅ Node registered: {"rss": NodeDescriptor { id: "rss", description: "RSS 节点：抓取固定 Google News RSS，并根据关键词过滤", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssInput\",\n  \"description\": \"✅ 输入只包含关键词\",\n  \"type\": \"object\",\n  \"required\": [\n    \"keywords\"\n  ],\n  \"properties\": {\n    \"keywords\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssOutput\",\n  \"description\": \"✅ 输出包含匹配项\",\n  \"type\": \"object\",\n  \"required\": [\n    \"items\"\n  ],\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/RssItem\"\n      }\n    }\n  },\n  \"definitions\": {\n    \"RssItem\": {\n      \"description\": \"✅ RSS 项结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"link\",\n        \"published\",\n        \"summary\",\n        \"title\"\n      ],\n      \"properties\": {\n        \"link\": {\n          \"type\": \"string\"\n        },\n        \"published\": {\n          \"type\": \"string\"\n        },\n        \"summary\": {\n          \"type\": \"string\"\n        },\n        \"title\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}", aggregate: false }, "react": NodeDescriptor { id: "react", description: "ReAct 节点：使用链式思考整合工作流信息，自我评分直至生成满足要求的输出，必须需要有前置聚合数据，没有前置数据不能单独直接使用,整体输入:{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactOutput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"chain_of_thought\",\n    \"content\",\n    \"final_conclusion\",\n    \"score\"\n  ],\n  \"properties\": {\n    \"chain_of_thought\": {\n      \"description\": \"详细的链式思考过程\",\n      \"type\": \"string\"\n    },\n    \"content\": {\n      \"description\": \"最终结果\",\n      \"type\": \"string\"\n    },\n    \"final_conclusion\": {\n      \"description\": \"最终得出的结论\",\n      \"type\": \"string\"\n    },\n    \"score\": {\n      \"description\": \"自我评分，范围 0.0 ~ 1.0，1.0 表示输出完美符合要求\",\n      \"type\": \"number\",\n      \"format\": \"double\"\n    }\n  }\n}", aggregate: true }, "web_search": NodeDescriptor { id: "web_search", description: "使用浏览器执行搜索，并解析搜索结果", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchWebArgs\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"click\": {\n      \"type\": [\n        \"boolean\",\n        \"null\"\n      ]\n    },\n    \"query\": {\n      \"type\": \"string\"\n    },\n    \"site\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchResult\",\n  \"type\": \"object\",\n  \"required\": [\n    \"link\",\n    \"title\"\n  ],\n  \"properties\": {\n    \"content\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"link\": {\n      \"type\": \"string\"\n    },\n    \"title\": {\n      \"type\": \"string\"\n    }\n  }\n}", aggregate: false }}
+📥 收到注册事件: ArrowData(StructArray
+-- validity: 
+[
+  valid,
+]
+[
+-- child 0: "id" (Utf8)
+StringArray
+[
+  "file_op",
+]
+-- child 1: "description" (Utf8)
+StringArray
+[
+  "文件操作节点，支持创建文件夹、删除文件夹、创建文件、删除文件、更新文件和读取文件",
+]
+-- child 2: "inputs" (Utf8)
+StringArray
+[
+  "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"Array_of_FileOperationArgs\",\n  \"type\": \"array\",\n  \"items\": {\n    \"$ref\": \"#/definitions/FileOperationArgs\"\n  },\n  \"definitions\": {\n    \"FileOperationArgs\": {\n      \"description\": \"定义文件操作的参数结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"operation\",\n        \"path\"\n      ],\n      \"properties\": {\n        \"content\": {\n          \"description\": \"文件内容（用于创建或更新文件(create_file)(update_file)必须要有值，其他操作可忽略）\",\n          \"type\": [\n            \"string\",\n            \"null\"\n          ]\n        },\n        \"operation\": {\n          \"description\": \"操作类型，支持 \\\"create_folder\\\", \\\"delete_folder\\\", \\\"create_file\\\", \\\"delete_file\\\", \\\"update_file\\\", \\\"read_file\\\"\",\n          \"type\": \"string\"\n        },\n        \"path\": {\n          \"description\": \"文件或文件夹的路径（可以是相对路径或绝对路径）\",\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}",
+]
+-- child 3: "outputs" (Utf8)
+StringArray
+[
+  "字符串类型，操作结果或读取的文件内容",
+]
+-- child 4: "aggregate" (Boolean)
+BooleanArray
+[
+  false,
+]
+])
+✅ Node registered: {"rss": NodeDescriptor { id: "rss", description: "RSS 节点：抓取固定 Google News RSS，并根据关键词过滤", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssInput\",\n  \"description\": \"✅ 输入只包含关键词\",\n  \"type\": \"object\",\n  \"required\": [\n    \"keywords\"\n  ],\n  \"properties\": {\n    \"keywords\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssOutput\",\n  \"description\": \"✅ 输出包含匹配项\",\n  \"type\": \"object\",\n  \"required\": [\n    \"items\"\n  ],\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/RssItem\"\n      }\n    }\n  },\n  \"definitions\": {\n    \"RssItem\": {\n      \"description\": \"✅ RSS 项结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"link\",\n        \"published\",\n        \"summary\",\n        \"title\"\n      ],\n      \"properties\": {\n        \"link\": {\n          \"type\": \"string\"\n        },\n        \"published\": {\n          \"type\": \"string\"\n        },\n        \"summary\": {\n          \"type\": \"string\"\n        },\n        \"title\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}", aggregate: false }, "react": NodeDescriptor { id: "react", description: "ReAct 节点：使用链式思考整合工作流信息，自我评分直至生成满足要求的输出，必须需要有前置聚合数据，没有前置数据不能单独直接使用,整体输入:{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactOutput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"chain_of_thought\",\n    \"content\",\n    \"final_conclusion\",\n    \"score\"\n  ],\n  \"properties\": {\n    \"chain_of_thought\": {\n      \"description\": \"详细的链式思考过程\",\n      \"type\": \"string\"\n    },\n    \"content\": {\n      \"description\": \"最终结果\",\n      \"type\": \"string\"\n    },\n    \"final_conclusion\": {\n      \"description\": \"最终得出的结论\",\n      \"type\": \"string\"\n    },\n    \"score\": {\n      \"description\": \"自我评分，范围 0.0 ~ 1.0，1.0 表示输出完美符合要求\",\n      \"type\": \"number\",\n      \"format\": \"double\"\n    }\n  }\n}", aggregate: true }, "web_search": NodeDescriptor { id: "web_search", description: "使用浏览器执行搜索，并解析搜索结果", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchWebArgs\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"click\": {\n      \"type\": [\n        \"boolean\",\n        \"null\"\n      ]\n    },\n    \"query\": {\n      \"type\": \"string\"\n    },\n    \"site\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    }\n  }\n}", outputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchResult\",\n  \"type\": \"object\",\n  \"required\": [\n    \"link\",\n    \"title\"\n  ],\n  \"properties\": {\n    \"content\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"link\": {\n      \"type\": \"string\"\n    },\n    \"title\": {\n      \"type\": \"string\"\n    }\n  }\n}", aggregate: false }, "file_op": NodeDescriptor { id: "file_op", description: "文件操作节点，支持创建文件夹、删除文件夹、创建文件、删除文件、更新文件和读取文件", inputs: "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"Array_of_FileOperationArgs\",\n  \"type\": \"array\",\n  \"items\": {\n    \"$ref\": \"#/definitions/FileOperationArgs\"\n  },\n  \"definitions\": {\n    \"FileOperationArgs\": {\n      \"description\": \"定义文件操作的参数结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"operation\",\n        \"path\"\n      ],\n      \"properties\": {\n        \"content\": {\n          \"description\": \"文件内容（用于创建或更新文件(create_file)(update_file)必须要有值，其他操作可忽略）\",\n          \"type\": [\n            \"string\",\n            \"null\"\n          ]\n        },\n        \"operation\": {\n          \"description\": \"操作类型，支持 \\\"create_folder\\\", \\\"delete_folder\\\", \\\"create_file\\\", \\\"delete_file\\\", \\\"update_file\\\", \\\"read_file\\\"\",\n          \"type\": \"string\"\n        },\n        \"path\": {\n          \"description\": \"文件或文件夹的路径（可以是相对路径或绝对路径）\",\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}", outputs: "字符串类型，操作结果或读取的文件内容", aggregate: false }}
+📥 收到输入事件: 从 bilibili.com 找关于 AI 的视频链接，写入文件
+🧠 `LLM` 提示: 
+        你是一个严格的任务规划器，请根据当前输入数据 `从 bilibili.com 找关于 AI 的视频链接，写入文件` 和以下 `Node` 列表，从中选择一个或多个节点来完成任务。
+
+        当前可用的节点信息如下：
+        [
+  {
+    "id": "rss",
+    "description": "RSS 节点：抓取固定 Google News RSS，并根据关键词过滤",
+    "inputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssInput\",\n  \"description\": \"✅ 输入只包含关键词\",\n  \"type\": \"object\",\n  \"required\": [\n    \"keywords\"\n  ],\n  \"properties\": {\n    \"keywords\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}",
+    "outputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"RssOutput\",\n  \"description\": \"✅ 输出包含匹配项\",\n  \"type\": \"object\",\n  \"required\": [\n    \"items\"\n  ],\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/RssItem\"\n      }\n    }\n  },\n  \"definitions\": {\n    \"RssItem\": {\n      \"description\": \"✅ RSS 项结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"link\",\n        \"published\",\n        \"summary\",\n        \"title\"\n      ],\n      \"properties\": {\n        \"link\": {\n          \"type\": \"string\"\n        },\n        \"published\": {\n          \"type\": \"string\"\n        },\n        \"summary\": {\n          \"type\": \"string\"\n        },\n        \"title\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}",
+    "aggregate": false
+  },
+  {
+    "id": "react",
+    "description": "ReAct 节点：使用链式思考整合工作流信息，自我评分直至生成满足要求的输出，必须需要有前置聚合数据，没有前置数据不能单独直接使用,整体输入:{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}",
+    "inputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactInput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"query\": {\n      \"description\": \"工作流查询文本，描述当前任务的信息\",\n      \"type\": \"string\"\n    }\n  }\n}",
+    "outputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"ReactOutput\",\n  \"type\": \"object\",\n  \"required\": [\n    \"chain_of_thought\",\n    \"content\",\n    \"final_conclusion\",\n    \"score\"\n  ],\n  \"properties\": {\n    \"chain_of_thought\": {\n      \"description\": \"详细的链式思考过程\",\n      \"type\": \"string\"\n    },\n    \"content\": {\n      \"description\": \"最终结果\",\n      \"type\": \"string\"\n    },\n    \"final_conclusion\": {\n      \"description\": \"最终得出的结论\",\n      \"type\": \"string\"\n    },\n    \"score\": {\n      \"description\": \"自我评分，范围 0.0 ~ 1.0，1.0 表示输出完美符合要求\",\n      \"type\": \"number\",\n      \"format\": \"double\"\n    }\n  }\n}",
+    "aggregate": true
+  },
+  {
+    "id": "web_search",
+    "description": "使用浏览器执行搜索，并解析搜索结果",
+    "inputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchWebArgs\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"click\": {\n      \"type\": [\n        \"boolean\",\n        \"null\"\n      ]\n    },\n    \"query\": {\n      \"type\": \"string\"\n    },\n    \"site\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    }\n  }\n}",
+    "outputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchResult\",\n  \"type\": \"object\",\n  \"required\": [\n    \"link\",\n    \"title\"\n  ],\n  \"properties\": {\n    \"content\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"link\": {\n      \"type\": \"string\"\n    },\n    \"title\": {\n      \"type\": \"string\"\n    }\n  }\n}",
+    "aggregate": false
+  },
+  {
+    "id": "file_op",
+    "description": "文件操作节点，支持创建文件夹、删除文件夹、创建文件、删除文件、更新文件和读取文件",
+    "inputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"Array_of_FileOperationArgs\",\n  \"type\": \"array\",\n  \"items\": {\n    \"$ref\": \"#/definitions/FileOperationArgs\"\n  },\n  \"definitions\": {\n    \"FileOperationArgs\": {\n      \"description\": \"定义文件操作的参数结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"operation\",\n        \"path\"\n      ],\n      \"properties\": {\n        \"content\": {\n          \"description\": \"文件内容（用于创建或更新文件(create_file)(update_file)必须要有值，其他操作可忽略）\",\n          \"type\": [\n            \"string\",\n            \"null\"\n          ]\n        },\n        \"operation\": {\n          \"description\": \"操作类型，支持 \\\"create_folder\\\", \\\"delete_folder\\\", \\\"create_file\\\", \\\"delete_file\\\", \\\"update_file\\\", \\\"read_file\\\"\",\n          \"type\": \"string\"\n        },\n        \"path\": {\n          \"description\": \"文件或文件夹的路径（可以是相对路径或绝对路径）\",\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}",
+    "outputs": "字符串类型，操作结果或读取的文件内容",
+    "aggregate": false
+  }
+]
+
+        请严格遵守以下规则：
+
+        1. **只返回一个合法的 JSON 字符串数组**，数组元素是节点的 `id`，如：["node_a", "node_b"]；
+        2. **严禁输出 `<think>`、解释说明、自然语言推理、格式注释、markdown 代码块等**；
+        3. 不要返回任何结构体、对象或其他字段，只返回数组；
+        4. 返回的 `id` 必须来自节点列表，不能随意编造；
+        5. 如果无法选择，返回一个空数组：[]。
+
+        请只返回一个合法 JSON 数组作为最终结果。
+        
+🧠 `LLM` 选择的执行方案: ["web_search", "file_op"]
+🧠 调用大模型生成下一个任务输入，prompt: 
+你是一个智能任务执行助手。你的唯一目标：生成与 “Next Node 描述信息” 的 `inputs` 结构和字段名字**完全相同**的 JSON 对象或数组。禁止包含其它键值或数组元素，禁止任何注释或解释说明。
+1. 认真审读“上一步返回结果”和下游节点的 input；
+2. 确定你需要用到哪些信息构造本节点的输入字段；
+3. 如果字段语义是“string”，则填写简洁自然语言；若为“object”或“array”，则严格匹配相应结构。
+4. 禁止输出任何与节点需求无关的信息、字段或层级。
+5. 对于query你可以对其进行简单的自然语言处理让起更好处理，比如将 `query` 的值从 `rust for linux` 变成 `rust for linux`，但是你不能对 `inputs` 和 `outputs` 的结构进行任何修改。
+6. 如果上下文完全不相关就根据对应的node的功能做对应的事
+
+【最终输出 - 仅返回符合 Next Node 的 JSON】
+- 仅返回一个可被 JSON 解析器直接解析的对象或数组；
+- 名称、类型、层级必须与 `Next Node` 的 `inputs` 完全一致，不能添加或删除；
+- 不得输出推理过程、解释、Markdown 代码块或任何额外内容。
+
+-----------------------------------------------------------------------
+你的总执行计划node_ids为
+web_search,file_op
+
+(1) Next Node 描述信息：
+{
+  "id": "web_search",
+  "description": "使用浏览器执行搜索，并解析搜索结果",
+  "inputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchWebArgs\",\n  \"type\": \"object\",\n  \"required\": [\n    \"query\"\n  ],\n  \"properties\": {\n    \"click\": {\n      \"type\": [\n        \"boolean\",\n        \"null\"\n      ]\n    },\n    \"query\": {\n      \"type\": \"string\"\n    },\n    \"site\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    }\n  }\n}",
+  "outputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"SearchResult\",\n  \"type\": \"object\",\n  \"required\": [\n    \"link\",\n    \"title\"\n  ],\n  \"properties\": {\n    \"content\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"link\": {\n      \"type\": \"string\"\n    },\n    \"title\": {\n      \"type\": \"string\"\n    }\n  }\n}",
+  "aggregate": false
+}
+
+(2) 上一步返回的原始 JSON 结果：
+"从 bilibili.com 找关于 AI 的视频链接，写入文件"
+
+(3) 生成规则：
+- 如果 Next Node `inputs` 为 { "query": "根据搜索结果写一篇文章" }，
+  你必须返回类似：
+  {
+    "query": "（此处为最开始的传输信息）"
+  }
+- 禁止返回数组，除非 Schema 要求是 array；
+- 禁止任何解释、注释或 Markdown 代码块。
+
+请严格遵守上述规则，只输出与 “Next Node” 的 inputs 结构完全相同、可被 JSON 解析器直接解析的纯 JSON。
+
+🧠 大模型返回的生成输入: {
+  "query": "从 bilibili.com 找关于 AI 的视频链接"
+}
+✅ 下一任务已成功发送至 Node: web_search
+📥 收到结果事件: ArrowData(StructArray
+-- validity: 
+[
+  valid,
+]
+[
+-- child 0: "workflow_id" (Utf8)
+StringArray
+[
+  "9d51de22-842e-4864-bc3a-17f46c671f13",
+]
+-- child 1: "node_id" (Utf8)
+StringArray
+[
+  "web_search",
+]
+-- child 2: "input" (Utf8)
+StringArray
+[
+  "{\"query\":\"从 bilibili.com 找关于 AI 的视频链接\"}",
+]
+-- child 3: "prev_result" (Utf8)
+StringArray
+[
+  "\"从 bilibili.com 找关于 AI 的视频链接，写入文件\"",
+]
+-- child 4: "result" (Utf8)
+StringArray
+[
+  "[{\"title\":\"如何使用ChatGPT 轻松生成AI 视频\",\"link\":\"https://www.bilibili.com/read/cv24891484/\",\"content\":null},{\"title\":\"1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\",\"link\":\"https://www.bilibili.com/video/BV1yk4y1p7Vq/\",\"content\":null},{\"title\":\"如何使用AI 工具Vizard 将视频转化为链接进行分享\",\"link\":\"https://www.bilibili.com/video/BV1nD4y1P7cY/\",\"content\":null},{\"title\":\"一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\",\"link\":\"https://www.bilibili.com/video/BV1ZN411z7Hc/\",\"content\":null},{\"title\":\"建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\",\"link\":\"https://www.bilibili.com/read/cv34560554/\",\"content\":null}]",
+]
+-- child 5: "aggregated" (Utf8)
+StringArray
+[
+  "",
+]
+])
+📥 收到结果事件，workflow_id: 9d51de22-842e-4864-bc3a-17f46c671f13, node_id: web_search
+🧠 调用大模型生成下一个任务输入，prompt: 
+你是一个智能任务执行助手。你的唯一目标：生成与 “Next Node 描述信息” 的 `inputs` 结构和字段名字**完全相同**的 JSON 对象或数组。禁止包含其它键值或数组元素，禁止任何注释或解释说明。
+1. 认真审读“上一步返回结果”和下游节点的 input；
+2. 确定你需要用到哪些信息构造本节点的输入字段；
+3. 如果字段语义是“string”，则填写简洁自然语言；若为“object”或“array”，则严格匹配相应结构。
+4. 禁止输出任何与节点需求无关的信息、字段或层级。
+5. 对于query你可以对其进行简单的自然语言处理让起更好处理，比如将 `query` 的值从 `rust for linux` 变成 `rust for linux`，但是你不能对 `inputs` 和 `outputs` 的结构进行任何修改。
+6. 如果上下文完全不相关就根据对应的node的功能做对应的事
+
+【最终输出 - 仅返回符合 Next Node 的 JSON】
+- 仅返回一个可被 JSON 解析器直接解析的对象或数组；
+- 名称、类型、层级必须与 `Next Node` 的 `inputs` 完全一致，不能添加或删除；
+- 不得输出推理过程、解释、Markdown 代码块或任何额外内容。
+
+-----------------------------------------------------------------------
+你的总执行计划node_ids为
+web_search,file_op
+
+(1) Next Node 描述信息：
+{
+  "id": "file_op",
+  "description": "文件操作节点，支持创建文件夹、删除文件夹、创建文件、删除文件、更新文件和读取文件",
+  "inputs": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"Array_of_FileOperationArgs\",\n  \"type\": \"array\",\n  \"items\": {\n    \"$ref\": \"#/definitions/FileOperationArgs\"\n  },\n  \"definitions\": {\n    \"FileOperationArgs\": {\n      \"description\": \"定义文件操作的参数结构体\",\n      \"type\": \"object\",\n      \"required\": [\n        \"operation\",\n        \"path\"\n      ],\n      \"properties\": {\n        \"content\": {\n          \"description\": \"文件内容（用于创建或更新文件(create_file)(update_file)必须要有值，其他操作可忽略）\",\n          \"type\": [\n            \"string\",\n            \"null\"\n          ]\n        },\n        \"operation\": {\n          \"description\": \"操作类型，支持 \\\"create_folder\\\", \\\"delete_folder\\\", \\\"create_file\\\", \\\"delete_file\\\", \\\"update_file\\\", \\\"read_file\\\"\",\n          \"type\": \"string\"\n        },\n        \"path\": {\n          \"description\": \"文件或文件夹的路径（可以是相对路径或绝对路径）\",\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}",
+  "outputs": "字符串类型，操作结果或读取的文件内容",
+  "aggregate": false
+}
+
+(2) 上一步返回的原始 JSON 结果：
+[{"title":"如何使用ChatGPT 轻松生成AI 视频","link":"https://www.bilibili.com/read/cv24891484/","content":null},{"title":"1小时剪30个短视频切片，把链接扔给AI它全给你搞好！","link":"https://www.bilibili.com/video/BV1yk4y1p7Vq/","content":null},{"title":"如何使用AI 工具Vizard 将视频转化为链接进行分享","link":"https://www.bilibili.com/video/BV1nD4y1P7cY/","content":null},{"title":"一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...","link":"https://www.bilibili.com/video/BV1ZN411z7Hc/","content":null},{"title":"建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...","link":"https://www.bilibili.com/read/cv34560554/","content":null}]
+
+(3) 生成规则：
+- 如果 Next Node `inputs` 为 { "query": "根据搜索结果写一篇文章" }，
+  你必须返回类似：
+  {
+    "query": "（此处为最开始的传输信息）"
+  }
+- 禁止返回数组，除非 Schema 要求是 array；
+- 禁止任何解释、注释或 Markdown 代码块。
+
+请严格遵守上述规则，只输出与 “Next Node” 的 inputs 结构完全相同、可被 JSON 解析器直接解析的纯 JSON。
+
+🧠 大模型返回的生成输入: [
+  {
+    "operation": "create_file",
+    "path": "./ai_videos_links.txt",
+    "content": "如何使用ChatGPT 轻松生成AI 视频\nhttps://www.bilibili.com/read/cv24891484/\n\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\n\n如何使用AI 工具Vizard 将视频转化为链接进行分享\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\n\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\n\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\nhttps://www.bilibili.com/read/cv34560554/"
+  }
+]
+✅ 下一任务已成功发送至 Node: file_op
+📥 收到结果事件: ArrowData(StructArray
+-- validity: 
+[
+  valid,
+]
+[
+-- child 0: "workflow_id" (Utf8)
+StringArray
+[
+  "9d51de22-842e-4864-bc3a-17f46c671f13",
+]
+-- child 1: "node_id" (Utf8)
+StringArray
+[
+  "file_op",
+]
+-- child 2: "input" (Utf8)
+StringArray
+[
+  "[{\"content\":\"如何使用ChatGPT 轻松生成AI 视频\\nhttps://www.bilibili.com/read/cv24891484/\\n\\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\\n\\n如何使用AI 工具Vizard 将视频转化为链接进行分享\\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\\n\\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\\n\\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\\nhttps://www.bilibili.com/read/cv34560554/\",\"operation\":\"create_file\",\"path\":\"./ai_videos_links.txt\"}]",
+]
+-- child 3: "prev_result" (Utf8)
+StringArray
+[
+  "",
+]
+-- child 4: "result" (Utf8)
+StringArray
+[
+  "[\"文件 ./ai_videos_links.txt 创建成功\"]",
+]
+-- child 5: "aggregated" (Utf8)
+StringArray
+[
+  "",
+]
+])
+📥 收到结果事件，workflow_id: 9d51de22-842e-4864-bc3a-17f46c671f13, node_id: file_op
+✅ 工作流 9d51de22-842e-4864-bc3a-17f46c671f13 完成, 最终结果: [Array [Object {"title": String("如何使用ChatGPT 轻松生成AI 视频"), "link": String("https://www.bilibili.com/read/cv24891484/"), "content": Null}, Object {"title": String("1小时剪30个短视频切片，把链接扔给AI它全给你搞好！"), "link": String("https://www.bilibili.com/video/BV1yk4y1p7Vq/"), "content": Null}, Object {"title": String("如何使用AI 工具Vizard 将视频转化为链接进行分享"), "link": String("https://www.bilibili.com/video/BV1nD4y1P7cY/"), "content": Null}, Object {"title": String("一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ..."), "link": String("https://www.bilibili.com/video/BV1ZN411z7Hc/"), "content": Null}, Object {"title": String("建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ..."), "link": String("https://www.bilibili.com/read/cv34560554/"), "content": Null}], Array [String("文件 ./ai_videos_links.txt 创建成功")]]
+🛑 `Stop` 事件，RouterApp 退出...

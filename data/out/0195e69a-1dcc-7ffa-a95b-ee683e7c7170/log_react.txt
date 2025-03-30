@@ -1,0 +1,4 @@
+🚀 start react-node
+🚀 react-node started
+✅ react-node registered
+收到 stop 事件 react节点退出

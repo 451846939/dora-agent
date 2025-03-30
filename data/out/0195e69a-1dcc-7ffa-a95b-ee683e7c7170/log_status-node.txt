@@ -1,0 +1,81 @@
+✅ 收到 WorkflowLog:
+Workflow: 9d51de22-842e-4864-bc3a-17f46c671f13
+Step 1/2
+Node: web_search
+Status: started
+Message: 🟢 启动工作流: 9d51de22-842e-4864-bc3a-17f46c671f13
+Input: {
+  "query": "从 bilibili.com 找关于 AI 的视频链接"
+}
+Output: null
+
+✅ 收到 WorkflowLog:
+Workflow: 9d51de22-842e-4864-bc3a-17f46c671f13
+Step 1/2
+Node: web_search
+Status: completed
+Message: ✅ 节点 web_search 执行完成
+Input: {
+  "query": "从 bilibili.com 找关于 AI 的视频链接"
+}
+Output: [
+  {
+    "content": null,
+    "link": "https://www.bilibili.com/read/cv24891484/",
+    "title": "如何使用ChatGPT 轻松生成AI 视频"
+  },
+  {
+    "content": null,
+    "link": "https://www.bilibili.com/video/BV1yk4y1p7Vq/",
+    "title": "1小时剪30个短视频切片，把链接扔给AI它全给你搞好！"
+  },
+  {
+    "content": null,
+    "link": "https://www.bilibili.com/video/BV1nD4y1P7cY/",
+    "title": "如何使用AI 工具Vizard 将视频转化为链接进行分享"
+  },
+  {
+    "content": null,
+    "link": "https://www.bilibili.com/video/BV1ZN411z7Hc/",
+    "title": "一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ..."
+  },
+  {
+    "content": null,
+    "link": "https://www.bilibili.com/read/cv34560554/",
+    "title": "建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ..."
+  }
+]
+
+✅ 收到 WorkflowLog:
+Workflow: 9d51de22-842e-4864-bc3a-17f46c671f13
+Step 2/2
+Node: file_op
+Status: completed
+Message: ✅ 节点 file_op 执行完成
+Input: [
+  {
+    "content": "如何使用ChatGPT 轻松生成AI 视频\nhttps://www.bilibili.com/read/cv24891484/\n\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\n\n如何使用AI 工具Vizard 将视频转化为链接进行分享\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\n\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\n\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\nhttps://www.bilibili.com/read/cv34560554/",
+    "operation": "create_file",
+    "path": "./ai_videos_links.txt"
+  }
+]
+Output: [
+  "文件 ./ai_videos_links.txt 创建成功"
+]
+
+✅ 收到 WorkflowLog:
+Workflow: 9d51de22-842e-4864-bc3a-17f46c671f13
+Step 2/2
+Node: file_op
+Status: finished
+Message: 🏁 工作流 9d51de22-842e-4864-bc3a-17f46c671f13 完成，结果汇总：根据您的查询“从 bilibili.com 找关于 AI 的视频链接，并写入文件”，该工作流执行了以下步骤：
+
+1. **搜索阶段**：首先，在哔哩哔哩网站上进行关键词为“AI 视频”的搜索。搜索结果返回了一组包含五个与主题相关的条目，每个条目提供了视频或文章的标题和对应的链接。返回的结果中并未包含具体内容（content 字段为 null）。
+
+2. **文件写入阶段**：接下来，系统将这些搜索找到的视频链接信息整理并保存到一个新的文本文件中。该步骤结果表明，一个名为 `ai_videos_links.txt` 的文件已被成功创建，并包含了之前从哔哩哔哩获取的所有 AI 相关视频和文章的标题及链接。
+
+**最终结果**：整个查询工作流顺利执行完毕。用户现在拥有一份包含从哔哩哔哩收集到的关于AI视频资源的文本文件，其中包括五个项目的名称及其对应URL信息，方便后续查阅或进一步处理。
+Input: null
+Output: "根据您的查询“从 bilibili.com 找关于 AI 的视频链接，并写入文件”，该工作流执行了以下步骤：\n\n1. **搜索阶段**：首先，在哔哩哔哩网站上进行关键词为“AI 视频”的搜索。搜索结果返回了一组包含五个与主题相关的条目，每个条目提供了视频或文章的标题和对应的链接。返回的结果中并未包含具体内容（content 字段为 null）。\n\n2. **文件写入阶段**：接下来，系统将这些搜索找到的视频链接信息整理并保存到一个新的文本文件中。该步骤结果表明，一个名为 `ai_videos_links.txt` 的文件已被成功创建，并包含了之前从哔哩哔哩获取的所有 AI 相关视频和文章的标题及链接。\n\n**最终结果**：整个查询工作流顺利执行完毕。用户现在拥有一份包含从哔哩哔哩收集到的关于AI视频资源的文本文件，其中包括五个项目的名称及其对应URL信息，方便后续查阅或进一步处理。"
+
+status-node received stop event

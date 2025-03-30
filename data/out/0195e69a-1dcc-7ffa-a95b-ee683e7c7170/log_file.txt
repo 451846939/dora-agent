@@ -1,0 +1,46 @@
+🚀 启动 file 节点服务
+file 节点收到 FlowMessage: FlowMessage { workflow_id: "9d51de22-842e-4864-bc3a-17f46c671f13", node_id: "file_op", input: Array [Object {"content": String("如何使用ChatGPT 轻松生成AI 视频\nhttps://www.bilibili.com/read/cv24891484/\n\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\n\n如何使用AI 工具Vizard 将视频转化为链接进行分享\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\n\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\n\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\nhttps://www.bilibili.com/read/cv34560554/"), "operation": String("create_file"), "path": String("./ai_videos_links.txt")}], prev_result: Some(Array [Object {"content": Null, "link": String("https://www.bilibili.com/read/cv24891484/"), "title": String("如何使用ChatGPT 轻松生成AI 视频")}, Object {"content": Null, "link": String("https://www.bilibili.com/video/BV1yk4y1p7Vq/"), "title": String("1小时剪30个短视频切片，把链接扔给AI它全给你搞好！")}, Object {"content": Null, "link": String("https://www.bilibili.com/video/BV1nD4y1P7cY/"), "title": String("如何使用AI 工具Vizard 将视频转化为链接进行分享")}, Object {"content": Null, "link": String("https://www.bilibili.com/video/BV1ZN411z7Hc/"), "title": String("一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...")}, Object {"content": Null, "link": String("https://www.bilibili.com/read/cv34560554/"), "title": String("建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...")}]), result: None, aggregated: None }
+file 节点收到 input: Array [Object {"content": String("如何使用ChatGPT 轻松生成AI 视频\nhttps://www.bilibili.com/read/cv24891484/\n\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\n\n如何使用AI 工具Vizard 将视频转化为链接进行分享\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\n\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\n\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\nhttps://www.bilibili.com/read/cv34560554/"), "operation": String("create_file"), "path": String("./ai_videos_links.txt")}]
+file 节点收到 received_input_str 字符串: "[{\"content\":\"如何使用ChatGPT 轻松生成AI 视频\\nhttps://www.bilibili.com/read/cv24891484/\\n\\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\\n\\n如何使用AI 工具Vizard 将视频转化为链接进行分享\\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\\n\\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\\n\\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\\nhttps://www.bilibili.com/read/cv34560554/\",\"operation\":\"create_file\",\"path\":\"./ai_videos_links.txt\"}]"
+LLM Prompt: 请根据下面的输入内容生成一个合法的 JSON 参数，该参数必须符合下面的 JSON Schema，且所有文件路径必须位于 `./` 下，不要生成随机目录。
+                        JSON Schema: {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Array_of_FileOperationArgs",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/FileOperationArgs"
+  },
+  "definitions": {
+    "FileOperationArgs": {
+      "description": "定义文件操作的参数结构体",
+      "type": "object",
+      "required": [
+        "operation",
+        "path"
+      ],
+      "properties": {
+        "content": {
+          "description": "文件内容（用于创建或更新文件(create_file)(update_file)必须要有值，其他操作可忽略）",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operation": {
+          "description": "操作类型，支持 \"create_folder\", \"delete_folder\", \"create_file\", \"delete_file\", \"update_file\", \"read_file\"",
+          "type": "string"
+        },
+        "path": {
+          "description": "文件或文件夹的路径（可以是相对路径或绝对路径）",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+                        输入内容: [{"content":"如何使用ChatGPT 轻松生成AI 视频\nhttps://www.bilibili.com/read/cv24891484/\n\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\n\n如何使用AI 工具Vizard 将视频转化为链接进行分享\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\n\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\n\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\nhttps://www.bilibili.com/read/cv34560554/","operation":"create_file","path":"./ai_videos_links.txt"}]
+                        请只返回合法的 JSON 参数，不要添加任何额外说明。
+LLM 返回的组装结果: Ok("```json\n[\n  {\n    \"content\": \"如何使用ChatGPT 轻松生成AI 视频\\nhttps://www.bilibili.com/read/cv24891484/\\n\\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\\n\\n如何使用AI 工具Vizard 将视频转化为链接进行分享\\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\\n\\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\\n\\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\\nhttps://www.bilibili.com/read/cv34560554/\",\n    \"operation\": \"create_file\",\n    \"path\": \"./ai_videos_links.txt\"\n  }\n]\n```")
+执行文件操作批量任务: [FileOperationArgs { operation: "create_file", path: "./ai_videos_links.txt", content: Some("如何使用ChatGPT 轻松生成AI 视频\nhttps://www.bilibili.com/read/cv24891484/\n\n1小时剪30个短视频切片，把链接扔给AI它全给你搞好！\nhttps://www.bilibili.com/video/BV1yk4y1p7Vq/\n\n如何使用AI 工具Vizard 将视频转化为链接进行分享\nhttps://www.bilibili.com/video/BV1nD4y1P7cY/\n\n一键总结B 站视频，联动快捷指令丨BibiGPT 开放API & ...\nhttps://www.bilibili.com/video/BV1ZN411z7Hc/\n\n建议收藏！16个文生视频/图生视频AI开源大模型项目专题 ...\nhttps://www.bilibili.com/read/cv34560554/") }]
+文件操作结果: ["文件 ./ai_videos_links.txt 创建成功"]
+收到 Stop 事件，file 节点退出
