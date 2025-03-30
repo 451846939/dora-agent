@@ -27,19 +27,19 @@ pub const FIXED_FEED_SOURCES: &[FeedSource] = &[
     // },
     FeedSource {
         name: "热点新闻（英文）",
-        url: "https://rsshub.rssforever.com/google/news/Top stories/hl=en-US&gl=US&ceid=US:en",
+        url: "https://rsshub.app/google/news/Top stories/hl=en-US&gl=US&ceid=US:en",
     },
     FeedSource {
         name: "国际新闻（英文）",
-        url: "https://rsshub.rssforever.com/google/news/World/hl=en-US&gl=US&ceid=US:en",
+        url: "https://rsshub.app/google/news/World/hl=en-US&gl=US&ceid=US:en",
     },
     FeedSource {
         name: "科技（英文）",
-        url: "https://rsshub.rssforever.com/google/news/Technology/hl=en-US&gl=US&ceid=US:en",
+        url: "https://rsshub.app/google/news/Technology/hl=en-US&gl=US&ceid=US:en",
     },
     FeedSource {
         name: "财经（英文）",
-        url: "https://rsshub.rssforever.com/google/news/Business/hl=en-US&gl=US&ceid=US:en",
+        url: "https://rsshub.app/google/news/Business/hl=en-US&gl=US&ceid=US:en",
     },
 ];
 
@@ -61,7 +61,7 @@ pub struct RssItem {
 /// ✅ 输出包含匹配项
 #[derive(Serialize, Deserialize, Debug, JsonSchema)]
 pub struct RssOutput {
-    pub items: Vec<RssItem>,
+    pub content: Vec<RssItem>,
 }
 
 #[tokio::main]
@@ -100,9 +100,9 @@ async fn main() -> Result<()> {
                                 }
                             })
                         ).await;
-
+                        println!("✅ rss-node finished fetching feeds :{:?}", feeds_results);
                         let all_items: Vec<RssItem> = feeds_results.into_iter().flatten().flatten().collect();
-                        let output = RssOutput { items: all_items };
+                        let output = RssOutput { content: all_items };
                         let new_flow_msg = FlowMessage {
                             workflow_id: flow_msg.workflow_id.clone(),
                             node_id: app_id.clone(),
@@ -185,11 +185,19 @@ pub fn parse_feed_items(feed: &feed_rs::model::Feed, keywords: &[String]) -> Vec
         let published = entry.published.map(|d| d.to_rfc3339()).unwrap_or_default();
         let combined = format!("{} {}", title, summary).to_lowercase();
 
-        if keywords.iter().any(|kw| combined.contains(&kw.to_lowercase())) {
-            let link = entry.links.get(0).map(|l| l.href.clone()).unwrap_or_default();
+        let word_list: Vec<&str> = combined
+            .split(|c: char| !c.is_alphanumeric())
+            .filter(|s| !s.is_empty())
+            .collect();
+
+        if keywords.iter().any(|kw| {
+            let kw_lc = kw.to_lowercase();
+            word_list.iter().any(|word| word == &kw_lc)
+        }) {
+            let link_url = entry.links.get(0).map(|l| l.href.clone()).unwrap_or_default();
             items.push(RssItem {
                 title,
-                link,
+                link: link_url,
                 summary,
                 published,
             });
