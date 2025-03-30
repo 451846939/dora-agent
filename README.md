@@ -6,7 +6,30 @@
 
 在基于`dora`的通信上定义了通信交互协议来让`router`进行元数据的构建达到决策的目的。
 
+## 设计
 
+```mermaid
+flowchart TB
+  subgraph Modules
+    file["File 模块"]
+    react["React 模块"]
+    rss["RSS 模块"]
+    web["Web Search 模块"]
+    status["Status 模块"]
+    dora["Dora Record"]
+  end
+
+  rust["Rust Node"]
+  router["Router 中枢"]
+
+  rust -- 请求/查询 --> router
+  router -- 分发任务 --> Modules
+  Modules -- 返回结果 --> router
+  router -- 状态反馈 --> rust
+  router -- 状态广播 --> status
+```
+
+## 数据交互
 
 当前项目整体交互如下：
 
@@ -310,7 +333,7 @@ nodes:
 
 - `web-search` 开发了好几版本身是希望llm自己解析html，然后再深入点击的功能，但是由于是本地推理而且效果不好并且速度极慢最后恢复到第一版固定选择器，后续这块还可以再优化思路可以参考这篇[Browser Use](https://mp.weixin.qq.com/s/GbEhX8SPbYvHFW8BRANVHg)
 - `rss`支持更多的搜索以及llm智能化根据输入来判断应该查询哪些rss
-- `router` 的思考选择、流程优化和最后结果的生成优化
+- `router` 的思考选择、流程优化和最后结果的生成优化，特别是针对下一个任务的input参数输入的优化
 - 模版化复用`dora`生态的node
 - 当前协议其实比较粗糙，可以再规范化协议
 - 支持对当前操作系统的相关调用，命令行和环境自搭建
