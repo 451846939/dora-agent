@@ -65,16 +65,19 @@ async fn main() -> Result<()> {
                             // 且输出必须符合动态传入的 JSON Schema
                             let prompt = format!(r#"
 [ReAct 分析]
-请对以下工作流查询和收集到的资料进行详细的链式思考和推理，描述你每一步的思考过程，并在最后给出最终结论和生成完整文章的内容：
+请对以下查询和收集到的资料进行链式思考和推理，描述每一步思考过程，并在最后给出最终结论和生成完整文章内容。
+
+⚠️ 每条资料可能是一个链接或文章摘要，请**逐条处理**并明确引用出处。请务必**保留链接原文或来源信息**。
+
 ----------------------------------------
 查询:
 {}
 ----------------------------------------
-收集到的资料:
+收集到的资料（可能为链接或文字）:
 {}
 ----------------------------------------
 输出要求：
-请以 JSON 格式输出，输出必须符合以下 JSON Schema，不要输出任何多余的内容：
+请以 JSON 格式输出，输出必须符合以下 JSON Schema，不要输出任何多余内容：
 {}
 "#, input_text, materials_text, output_schema_json);
 
@@ -151,7 +154,7 @@ async fn main() -> Result<()> {
                             metadata.parameters.clone(),
                             NodeDescriptor {
                                 id: app_id.clone(),
-                                description: format!("ReAct 节点：使用链式思考整合工作流信息，自我评分直至生成满足要求的输出，必须需要有前置聚合数据，没有前置数据不能单独直接使用,整体输入:{}",serde_json::to_string_pretty(&schema_for!(ReactInput))?),
+                                description: format!("ReAct 节点：使用链式思考整合工作流信息(输出爬取链接直接输出类的任务不要交给我！！！！)，自我评分直至生成满足要求的输出，必须需要有前置聚合数据，没有前置数据不能单独直接使用,整体输入:{}",serde_json::to_string_pretty(&schema_for!(ReactInput))?),
                                 inputs: serde_json::to_string_pretty(&schema_for!(ReactInput))?,
                                 outputs: serde_json::to_string_pretty(&schema_for!(ReactOutput))?,
                                 aggregate: true,
